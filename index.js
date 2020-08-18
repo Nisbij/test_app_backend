@@ -11,10 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Archelios:N!5@rg11232@cluster0-becy8.mongodb.net/test_app?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-app.use('/',(req,res)=>{
-    res.send("Boi");
-})
-app.post('/addTask',(req,res)=>{
+
+app.post('/',(req,res)=>{
     const task = {
         title: req.body.title,
         desc: req.body.desc
