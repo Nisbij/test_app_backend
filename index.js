@@ -11,11 +11,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://Archelios:N!5@rg11232@cluster0-becy8.mongodb.net/test_app?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-
+    
 app.post('/',(req,res)=>{
     const task = {
-        title: req.body.title,
-        desc: req.body.desc
+        title: req.body.name,
+        desc: req.body.regno
     }
     console.log(req.body);
     client.connect(err => {
@@ -26,6 +26,19 @@ app.post('/',(req,res)=>{
         },(err)=> next(err))
         client.close();
       });
-    res.send("boi");
+    res.send(task);
+})
+
+app.get('/getTask',(req,res)=>{
+    client.connect(err => {
+        const collection = client.db("test_app").collection("tasks");
+        collection.find().toArray()
+        .then(items=>{
+            console.log(items);
+            res.send(items);
+            return items;
+        })
+        .catch((err)=>console.log(err))
+    },(err)=>console.log(err))
 })
 app.listen(process.env.PORT || port,()=>{console.log(`Connected to port ${port}`)});
