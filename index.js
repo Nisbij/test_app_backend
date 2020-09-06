@@ -36,7 +36,7 @@ app.get('/getTask',(req,res)=>{
         .then(items=>{
             console.log(items);
             res.send(items);
-            return items;
+            return items.toArray();
         })
         .catch((err)=>console.log(err))
     },(err)=>console.log(err))
